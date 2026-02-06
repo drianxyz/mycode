@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Peta Interaktif - Kecamatan Kedungbanteng</title>
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- LAYOUT UTAMA --- */
+      body {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        font-family: "Inter", sans-serif;
+      }
+
+      .map-fullscreen {
+        flex: 1;
+        width: 100%;
+        position: relative;
+        background-color: #f0f0f0;
+      }
+
+      .map-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
+
+      /* --- CSS KHUSUS DROPDOWN (GAYA TEXT LINK) --- */
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        /* Margin kanan disesuaikan agar rapi dengan menu lain */
+        margin-right: 15px;
+      }
+
+      /* Styling Button agar mirip Nav-Link (Teks Biasa) */
+      .btn-nav-link {
+        background: transparent; /* Transparan, tidak ada blok warna */
+        border: none;
+        font-family: inherit;
+        font-weight: 600; /* Tebal font sama dengan menu lain */
+        font-size: 1rem; /* Ukuran font standar */
+        color: #333; /* Warna teks hitam/abu gelap */
+        cursor: pointer;
+        padding: 10px 15px; /* Spasi klik */
+        display: flex;
+        align-items: center;
+        gap: 6px; /* Jarak teks dengan panah */
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      /* Efek Hover: Berubah Hijau (Tema Gojek) */
+      .btn-nav-link:hover {
+        color: var(--gojek-green, #00aa13);
+      }
+
+      /* Icon Panah Kecil */
+      .fa-chevron-down {
+        font-size: 0.75em;
+        transition: transform 0.3s;
+        opacity: 0.7; /* Sedikit pudar agar elegan */
+      }
+
+      /* Putar panah saat hover */
+      .dropdown:hover .fa-chevron-down {
+        transform: rotate(180deg);
+        opacity: 1;
+      }
+
+      /* --- MENU DROPDOWN (DAFTAR ISI) --- */
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        min-width: 220px;
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+        padding: 8px 0;
+        z-index: 9999;
+        list-style: none;
+        margin-top: 5px;
+        border: 1px solid #f0f0f0;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .dropdown:hover .dropdown-menu {
+        display: block;
+        animation: fadeIn 0.2s ease-in-out;
+      }
+
+      /* --- ITEM LIST --- */
+      .dropdown-item {
+        display: block;
+        padding: 10px 20px;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.2s, color 0.2s;
+        border-bottom: 1px solid #f9f9f9;
+      }
+
+      .dropdown-item:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0fdf4; /* Hijau pudar saat hover item */
+        color: var(--gojek-green, #00aa13);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo.png" alt="Logo" />
+          <span>Kedungbanteng</span>
+        </a>
+
+        <div class="menu-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+
+        <div class="nav-menu">
+          <a href="index.html" class="nav-link">Beranda</a>
+          <a href="profil.html" class="nav-link">Profil & Data</a>
+
+          <div class="dropdown">
+            <button class="btn-nav-link dropdown-toggle" type="button">
+              Peta Desa <i class="fas fa-chevron-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="desa/karangsalamkidul/karangsalamkidul.html"
+                  >Desa Karangsalam Kidul</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="desa/beji/beji.html"
+                  >Desa Beji</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="desa/kedungbanteng/kedungbanteng.html"
+                  >Desa Kedungbanteng</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="desa/kebocoran/kebocoran.html"
+                  >Desa Kebocoran</a
+                >
+              </li>
+            </ul>
+          </div>
+          <a
+            href="index.html"
+            class="nav-btn"
+            style="background-color: var(--text-black)"
+            >Kembali</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main class="map-fullscreen">
+      <div class="map-loader" id="mapLoader">
+        <div class="spinner"></div>
+        <p style="color: #666; font-weight: 600">Memuat Peta...</p>
+      </div>
+
+      <iframe
+        src="qgismap/index.html"
+        class="map-frame"
+        title="Peta WebGIS"
+        onload="hideLoader()"
+      ></iframe>
+    </main>
+
+    <script>
+      // 1. Script Loader Peta (Bawaan Lama)
+      function hideLoader() {
+        const loader = document.getElementById("mapLoader");
+        setTimeout(() => {
+          loader.classList.add("hidden");
+        }, 1000);
+      }
+
+      // 2. Script Menu Mobile (Hamburger) - BARU DITAMBAHKAN
+      const menuToggle = document.querySelector("#mobile-menu"); // Pastikan HTML tombol hamburger sudah dicopy juga
+      const navMenu = document.querySelector(".nav-menu");
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener("click", function () {
+          menuToggle.classList.toggle("is-active");
+          navMenu.classList.toggle("active");
+        });
+      }
+
+      // 3. Script Dropdown Mobile (Agar diklik muncul, bukan di-hover) - UNTUK MENU PETA
+      const dropdownBtn = document.querySelector(".dropdown-toggle");
+      const dropdownMenu = document.querySelector(".dropdown-menu");
+
+      if (dropdownBtn) {
+        dropdownBtn.addEventListener("click", function (e) {
+          // Hanya jalankan logic ini jika di layar mobile
+          if (window.innerWidth <= 768) {
+            e.preventDefault();
+
+            // Toggle display menu
+            if (dropdownMenu.style.display === "block") {
+              dropdownMenu.style.display = "none";
+            } else {
+              dropdownMenu.style.display = "block";
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

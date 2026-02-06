@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profil & Data Lengkap - Kedungbanteng</title>
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      /* Setup Dasar */
+      body {
+        background-color: #f8f9fa;
+      }
+
+      .page-header {
+        background: white;
+        padding: 40px 24px 20px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+      }
+
+      /* --- NAVIGASI TAB --- */
+      .tab-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .tab-btn {
+        padding: 10px 24px;
+        border: none;
+        background: #f0f0f0;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 600;
+        color: #666;
+        transition: all 0.3s;
+        font-family: "Inter", sans-serif;
+      }
+
+      .tab-btn.active {
+        background-color: #00aa13; /* Hijau Gojek */
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 170, 19, 0.3);
+      }
+
+      .tab-btn:hover:not(.active) {
+        background: #e0e0e0;
+      }
+
+      /* --- KONTEN TAB --- */
+      .content-section {
+        display: none;
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 24px;
+      }
+
+      .content-section.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* --- KARTU INFO & TABEL --- */
+      .info-card {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 25px;
+        height: 100%; /* Agar tinggi kartu seragam di grid */
+      }
+
+      .info-card h3 {
+        border-left: 5px solid #00aa13;
+        padding-left: 15px;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+      }
+
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      .data-table td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+      }
+      .data-table tr:last-child td {
+        border-bottom: none;
+      }
+      .label-cell {
+        font-weight: 600;
+        width: 40%;
+        color: #555;
+      }
+
+      /* --- GRID DESA --- */
+      .search-box {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #eee;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+      .search-box:focus {
+        outline: none;
+        border-color: #00aa13;
+      }
+
+      .desa-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .desa-item {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        border: 1px solid #eee;
+        transition: transform 0.2s, border-color 0.2s;
+        cursor: pointer;
+      }
+
+      .desa-item:hover {
+        transform: translateY(-5px);
+        border-color: #00aa13;
+        box-shadow: 0 5px 15px rgba(0, 170, 19, 0.1);
+      }
+
+      .desa-icon {
+        width: 50px;
+        height: 50px;
+        background: #e6f7e9;
+        color: #00aa13;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-size: 1.2rem;
+      }
+
+      .desa-name {
+        font-weight: 700;
+        color: #333;
+      }
+      .hidden {
+        display: none !important;
+      }
+
+      /* --- POPUP MODAL --- */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+        animation: fadeIn 0.3s;
+      }
+
+      .modal-content {
+        background: white;
+        width: 90%;
+        max-width: 600px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        animation: slideUp 0.3s forwards;
+        position: relative;
+      }
+
+      .modal-header {
+        background: #00aa13;
+        padding: 20px 30px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      .modal-body {
+        padding: 30px;
+      }
+
+      .modal-stats {
+        display: flex;
+        gap: 15px;
+        margin: 20px 0;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 12px;
+        flex-wrap: wrap;
+      }
+
+      .stat-box {
+        flex: 1;
+        min-width: 100px;
+        text-align: center;
+      }
+      .stat-box h4 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #333;
+      }
+      .stat-box p {
+        margin: 5px 0 0;
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      .btn-map {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: #00aa13;
+        color: white;
+        padding: 12px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: background 0.3s;
+      }
+      .btn-map:hover {
+        background: #00880f;
+      }
+
+      @keyframes slideUp {
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      /* --- TAMBAHAN UNTUK GRID UMUM & GEOGRAFIS --- */
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(400px, 1fr)
+        ); /* Membagi jadi 2 kolom otomatis */
+        gap: 30px; /* Jarak antar kartu */
+      }
+
+      /* --- CSS KHUSUS DROPDOWN (TAMBAHAN) --- */
+      .dropdown {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-right: 15px; /* Jarak ke tombol sebelah kanan */
+      }
+
+      /* Styling Button Nav-Link */
+      .btn-nav-link {
+        background: transparent;
+        border: none;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #333; /* Sesuaikan warna jika background gelap */
+        cursor: pointer;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .btn-nav-link:hover {
+        color: #00aa13; /* Warna Hijau Gojek */
+      }
+
+      /* Icon Panah Kecil */
+      .fa-chevron-down {
+        font-size: 0.75em;
+        transition: transform 0.3s;
+        opacity: 0.7;
+      }
+
+      .dropdown:hover .fa-chevron-down {
+        transform: rotate(180deg);
+        opacity: 1;
+      }
+
+      /* --- MENU DROPDOWN LIST --- */
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        min-width: 220px;
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+        padding: 8px 0;
+        z-index: 9999;
+        list-style: none;
+        margin-top: 5px;
+        border: 1px solid #f0f0f0;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .dropdown:hover .dropdown-menu {
+        display: block;
+        animation: fadeIn 0.2s ease-in-out;
+      }
+
+      /* --- ITEM LIST --- */
+      .dropdown-item {
+        display: block;
+        padding: 10px 20px;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.2s, color 0.2s;
+        border-bottom: 1px solid #f9f9f9;
+      }
+
+      .dropdown-item:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0fdf4;
+        color: #00aa13;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+      }
+      /* --- ANIMASI BARU (Smooth dari Kiri) --- */
+      @keyframes slideInSmooth {
+        from {
+          opacity: 0;
+          transform: translateX(-30px); /* Mulai dari kiri */
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0); /* Ke posisi normal */
+        }
+      }
+
+      /* Class pembantu untuk animasi bertahap */
+      .stagger-card {
+        opacity: 0; /* Awalnya transparan */
+        animation: slideInSmooth 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo.png" alt="Logo" />
+          <span>Kedungbanteng</span>
+        </a>
+
+        <div class="menu-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+
+        <div class="nav-menu">
+          <a href="index.html" class="nav-link">Beranda</a>
+          <a href="#" class="nav-link" style="color: #00aa13">Profil & Data</a>
+
+          <div class="dropdown">
+            <button class="btn-nav-link dropdown-toggle" type="button">
+              Peta Desa <i class="fas fa-chevron-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="desa/karangsalamkidul/karangsalamkidul.html"
+                  >Desa Karangsalam Kidul</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="desa/beji/beji.html"
+                  >Desa Beji</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="desa/kedungbanteng/kedungbanteng.html"
+                  >Desa Kedungbanteng</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="desa/kebocoran/kebocoran.html"
+                  >Desa Kebocoran</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <a href="peta.html" class="nav-btn">Buka Peta</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="page-header">
+      <h1>Profil Kecamatan</h1>
+      <p style="color: #666; margin-top: 10px">
+        Data lengkap administratif, geografis, dan demografis.
+      </p>
+
+      <div class="tab-container">
+        <button class="tab-btn active" onclick="openTab('umum')">
+          Umum & Sejarah
+        </button>
+        <button class="tab-btn" onclick="openTab('geografis')">
+          Geografis & Batas
+        </button>
+        <button class="tab-btn" onclick="openTab('desa')">
+          Daftar Desa (14)
+        </button>
+        <button class="tab-btn" onclick="openTab('statistik')">
+          Statistik
+        </button>
+      </div>
+    </header>
+
+    <section id="umum" class="content-section active">
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Tentang Kedungbanteng</h3>
+          <p style="line-height: 1.8; color: #444; margin-bottom: 20px">
+            Kecamatan Kedungbanteng adalah salah satu kecamatan di Kabupaten
+            Banyumas, Jawa Tengah. Wilayah ini strategis karena berbatasan
+            langsung dengan kawasan wisata Baturraden dan merupakan penyangga
+            kaki Gunung Slamet.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Visi & Misi</h3>
+          <ul style="padding-left: 20px; line-height: 1.8; color: #444">
+            <li>
+              Mewujudkan pelayanan publik yang prima, cepat, dan transparan.
+            </li>
+            <li>
+              Meningkatkan perekonomian berbasis potensi desa (Pertanian &
+              Perikanan).
+            </li>
+            <li>
+              Menjaga kelestarian lingkungan hidup kawasan lereng Gunung Slamet.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="geografis" class="content-section">
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Batas Wilayah</h3>
+          <table class="data-table">
+            <tr>
+              <td class="label-cell">Utara</td>
+              <td>Gunung Slamet / Kab. Tegal</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Timur</td>
+              <td>Kecamatan Baturraden</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Selatan</td>
+              <td>Kec. Karanglewas & Purwokerto Barat</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Barat</td>
+              <td>Kecamatan Cilongok</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="info-card">
+          <h3>Topografi</h3>
+          <p style="color: #444; line-height: 1.8">
+            Wilayah bagian utara berupa perbukitan dan pegunungan (lereng G.
+            Slamet) yang cocok untuk perkebunan. Sedangkan bagian selatan
+            merupakan dataran rendah yang subur untuk pemukiman dan pertanian
+            padi. Ketinggian rata-rata antara 150 - 600 mdpl.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="desa" class="content-section">
+      <div
+        class="info-card"
+        style="background: transparent; box-shadow: none; padding: 0"
+      >
+        <input
+          type="text"
+          id="searchDesa"
+          class="search-box"
+          placeholder="Cari nama desa..."
+          onkeyup="filterDesa()"
+        />
+
+        <div class="desa-grid" id="gridDesa">
+          <div class="desa-item" onclick="showDesaDetail('Kedungbanteng')">
+            <div class="desa-icon">
+              <i class="fa-solid fa-building-columns"></i>
+            </div>
+            <div class="desa-name">Kedungbanteng</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Baseh')">
+            <div class="desa-icon"><i class="fa-solid fa-tree"></i></div>
+            <div class="desa-name">Baseh</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Beji')">
+            <div class="desa-icon"><i class="fa-solid fa-water"></i></div>
+            <div class="desa-name">Beji</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Dawuhan Kulon')">
+            <div class="desa-icon"><i class="fa-solid fa-school"></i></div>
+            <div class="desa-name">Dawuhan Kulon</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Dawuhan Wetan')">
+            <div class="desa-icon"><i class="fa-solid fa-tractor"></i></div>
+            <div class="desa-name">Dawuhan Wetan</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Kalikesur')">
+            <div class="desa-icon">
+              <i class="fa-solid fa-mountain-sun"></i>
+            </div>
+            <div class="desa-name">Kalikesur</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Kalisalak')">
+            <div class="desa-icon"><i class="fa-solid fa-leaf"></i></div>
+            <div class="desa-name">Kalisalak</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Karangnangka')">
+            <div class="desa-icon"><i class="fa-solid fa-road"></i></div>
+            <div class="desa-name">Karangnangka</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Karangsalam Kidul')">
+            <div class="desa-icon"><i class="fa-solid fa-shop"></i></div>
+            <div class="desa-name">Karangsalam Kidul</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Kebocoran')">
+            <div class="desa-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+            <div class="desa-name">Kebocoran</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Keniten')">
+            <div class="desa-icon">
+              <i class="fa-solid fa-house-chimney"></i>
+            </div>
+            <div class="desa-name">Keniten</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Kutaliman')">
+            <div class="desa-icon"><i class="fa-solid fa-mosque"></i></div>
+            <div class="desa-name">Kutaliman</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Melung')">
+            <div class="desa-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+            <div class="desa-name">Melung</div>
+          </div>
+          <div class="desa-item" onclick="showDesaDetail('Windujaya')">
+            <div class="desa-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div class="desa-name">Windujaya</div>
+          </div>
+        </div>
+
+        <p
+          style="
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.9rem;
+          "
+        >
+          *Klik nama desa untuk melihat detail potensi dan statistik.
+        </p>
+      </div>
+    </section>
+
+    <section id="statistik" class="content-section">
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 30px;
+        "
+      >
+        <div class="info-card">
+          <h3>
+            <i class="fa-solid fa-users" style="color: #00aa13"></i> Demografi
+            Penduduk
+          </h3>
+          <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px">
+            Data sampel jumlah penduduk desa padat karya.
+          </p>
+          <div style="height: 300px">
+            <canvas id="populationChart"></canvas>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>
+            <i class="fa-solid fa-building" style="color: #00aeb6"></i>
+            Fasilitas Publik
+          </h3>
+          <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px">
+            Jumlah fasilitas umum dari data Peta QGIS.
+          </p>
+          <div style="height: 300px">
+            <canvas id="facilityChart"></canvas>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>
+            <i class="fa-solid fa-leaf" style="color: #ee2737"></i> Tata Guna
+            Lahan
+          </h3>
+          <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px">
+            Estimasi persentase penggunaan lahan wilayah.
+          </p>
+          <div style="height: 300px; display: flex; justify-content: center">
+            <canvas id="landUseChart"></canvas>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>
+            <i class="fa-solid fa-list-check" style="color: #93328e"></i>
+            Rekapitulasi Wilayah
+          </h3>
+          <table class="data-table">
+            <tr>
+              <td class="label-cell">Total Desa</td>
+              <td><b>14</b> Desa Administratif</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Pusat Pemerintahan</td>
+              <td>Desa Kedungbanteng</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Desa Tertinggi</td>
+              <td>Desa Windujaya</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Komoditas</td>
+              <td>Padi, Gurami, Kayu</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="gojek-footer">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="assets/logo.png" alt="Logo" />
+          <h3>Kecamatan Kedungbanteng</h3>
+        </div>
+        <div class="footer-links">
+          <p>&copy; 2026 ANDRI FIRMANSYAH CANIAGO.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="desaModal" class="modal-overlay" onclick="closeModal(event)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle">Nama Desa</h2>
+          <button class="close-btn" onclick="closeModalBtn()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p
+            id="modalDesc"
+            style="line-height: 1.6; color: #444; margin-bottom: 20px"
+          ></p>
+          <div class="modal-stats">
+            <div class="stat-box">
+              <i class="fa-solid fa-users" style="color: #00aa13"></i>
+              <h4 id="modalPop">0</h4>
+              <p>Penduduk</p>
+            </div>
+            <div class="stat-box">
+              <i class="fa-solid fa-map" style="color: #00aeb6"></i>
+              <h4 id="modalLuas">0</h4>
+              <p>Luas (km²)</p>
+            </div>
+            <div class="stat-box">
+              <i class="fa-solid fa-star" style="color: #ee2737"></i>
+              <h4 id="modalPotensi">-</h4>
+              <p>Potensi</p>
+            </div>
+          </div>
+          <a href="peta.html" class="btn-map"
+            ><i class="fa-regular fa-map"></i> Lihat di Peta Interaktif</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 1. NAVIGASI TAB
+      /* --- FUNGSI BARU DENGAN ANIMASI BERTINGKAT --- */
+      function openTab(tabName) {
+        // 1. Reset: Sembunyikan semua konten
+        var contents = document.getElementsByClassName("content-section");
+        for (var i = 0; i < contents.length; i++) {
+          contents[i].classList.remove("active");
+        }
+
+        // 2. Reset: Matikan semua tombol aktif
+        var buttons = document.getElementsByClassName("tab-btn");
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].classList.remove("active");
+        }
+
+        // 3. Aktifkan konten yang dipilih
+        var activeContent = document.getElementById(tabName);
+        activeContent.classList.add("active");
+
+        // 4. Aktifkan tombol yang diklik (Cari tombol yang sesuai tabName)
+        // Kita gunakan loop karena event.currentTarget kadang hilang scope-nya jika dipanggil manual
+        for (var i = 0; i < buttons.length; i++) {
+          if (buttons[i].getAttribute("onclick").includes(tabName)) {
+            buttons[i].classList.add("active");
+          }
+        }
+
+        // 5. LOGIKA ANIMASI (Jeda waktu antar kartu)
+        // Ambil semua elemen kartu, item desa, atau kotak pencarian di dalam tab aktif
+        var cards = activeContent.querySelectorAll(
+          ".info-card, .desa-item, .search-box"
+        );
+
+        cards.forEach(function (card, index) {
+          // Reset animasi agar bisa diputar ulang
+          card.classList.remove("stagger-card");
+          void card.offsetWidth; // Trik ajaib untuk mereset CSS (Trigger Reflow)
+
+          // Tambahkan class animasi baru
+          card.classList.add("stagger-card");
+
+          // Set jeda waktu: Kartu 1 (0s), Kartu 2 (0.1s), Kartu 3 (0.2s), dst.
+          card.style.animationDelay = index * 0.1 + "s";
+        });
+      }
+
+      // Tambahan: Jalankan tab 'umum' otomatis saat website pertama kali dibuka
+      document.addEventListener("DOMContentLoaded", function () {
+        openTab("umum");
+      });
+
+      // 2. SEARCH DESA
+      function filterDesa() {
+        var input = document.getElementById("searchDesa");
+        var filter = input.value.toUpperCase();
+        var items = document.getElementsByClassName("desa-item");
+        for (var i = 0; i < items.length; i++) {
+          var name = items[i].getElementsByClassName("desa-name")[0];
+          if (name.innerText.toUpperCase().indexOf(filter) > -1)
+            items[i].classList.remove("hidden");
+          else items[i].classList.add("hidden");
+        }
+      }
+
+      // 3. DATABASE DESA
+      const dataDesa = {
+        Kedungbanteng: {
+          desc: "Pusat pemerintahan kecamatan dengan fasilitas terlengkap.",
+          pop: "6,540",
+          luas: "2.5",
+          potensi: "Perdagangan",
+        },
+        Baseh: {
+          desc: "Desa penyangga hutan lindung dan wisata alam.",
+          pop: "4,200",
+          luas: "5.1",
+          potensi: "Wisata Alam",
+        },
+        Beji: {
+          desc: "Sentra perikanan air tawar (Mina Padi).",
+          pop: "5,200",
+          luas: "3.8",
+          potensi: "Perikanan",
+        },
+        "Dawuhan Kulon": {
+          desc: "Desa agraris dengan sistem irigasi teknis.",
+          pop: "3,100",
+          luas: "2.1",
+          potensi: "Pertanian",
+        },
+        "Dawuhan Wetan": {
+          desc: "Kawasan hunian semi-kota dan UMKM.",
+          pop: "3,400",
+          luas: "2.3",
+          potensi: "UMKM",
+        },
+        Kalikesur: {
+          desc: "Dataran tinggi, potensi cengkeh dan durian.",
+          pop: "2,800",
+          luas: "4.0",
+          potensi: "Perkebunan",
+        },
+        Kalisalak: {
+          desc: "Wisata religius dan kerajinan tangan.",
+          pop: "3,600",
+          luas: "3.5",
+          potensi: "Budaya",
+        },
+        Karangnangka: {
+          desc: "Lintasan strategis menuju Baturraden.",
+          pop: "4,800",
+          luas: "2.9",
+          potensi: "Kuliner",
+        },
+        "Karangsalam Kidul": {
+          desc: "Padat penduduk, pusat jasa kos.",
+          pop: "5,100",
+          luas: "1.8",
+          potensi: "Jasa Kos",
+        },
+        Kebocoran: {
+          desc: "Lumbung padi utama kecamatan.",
+          pop: "3,900",
+          luas: "3.1",
+          potensi: "Padi",
+        },
+        Keniten: {
+          desc: "Sektor peternakan berkembang pesat.",
+          pop: "4,100",
+          luas: "3.2",
+          potensi: "Peternakan",
+        },
+        Kutaliman: {
+          desc: "Penghasil tanaman obat keluarga.",
+          pop: "3,300",
+          luas: "4.7",
+          potensi: "Agroforestri",
+        },
+        Melung: {
+          desc: "Desa Internet dan wisata Pagubugan.",
+          pop: "2,500",
+          luas: "4.5",
+          potensi: "Eko-Wisata",
+        },
+        Windujaya: {
+          desc: "Desa tertinggi, penghasil sayuran.",
+          pop: "1,800",
+          luas: "6.2",
+          potensi: "Sayuran",
+        },
+        Default: {
+          desc: "Data belum tersedia.",
+          pop: "-",
+          luas: "-",
+          potensi: "-",
+        },
+      };
+
+      // 4. POPUP LOGIC
+      function showDesaDetail(namaDesa) {
+        const data = dataDesa[namaDesa] || dataDesa["Default"];
+
+        document.getElementById("modalTitle").innerText = "Desa " + namaDesa;
+        document.getElementById("modalDesc").innerText = data.desc;
+        document.getElementById("modalPop").innerText = data.pop;
+        document.getElementById("modalLuas").innerText = data.luas;
+        document.getElementById("modalPotensi").innerText = data.potensi;
+
+        // --- UPDATE LINK KE FILE PETA ASLI ---
+        var btnPeta = document.querySelector(".btn-map");
+
+        // Arahkan ke folder qgismap/index.html
+        // Pastikan struktur foldernya benar: profil.html sejajar dengan folder qgismap
+        btnPeta.href =
+          "qgismap/index.html?desa=" + encodeURIComponent(namaDesa);
+
+        document.getElementById("desaModal").style.display = "flex";
+      }
+      function closeModalBtn() {
+        document.getElementById("desaModal").style.display = "none";
+      }
+      function closeModal(event) {
+        if (event.target === document.getElementById("desaModal"))
+          closeModalBtn();
+      }
+
+      // 5. CHART JS LOGIC (3 GRAFIK)
+
+      // A. Populasi
+      new Chart(document.getElementById("populationChart").getContext("2d"), {
+        type: "bar",
+        data: {
+          labels: [
+            "Beji",
+            "Baseh",
+            "Melung",
+            "Keniten",
+            "Kebocoran",
+            "Kedungbanteng",
+          ],
+          datasets: [
+            {
+              label: "Populasi",
+              data: [5200, 4200, 2500, 4100, 3900, 6500],
+              backgroundColor: "#00aa13",
+              borderRadius: 5,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } },
+        },
+      });
+
+      // B. Fasilitas Publik (DARI LAYER PETA)
+      new Chart(document.getElementById("facilityChart").getContext("2d"), {
+        type: "bar",
+        data: {
+          labels: ["Sekolah", "Ibadah", "Kesehatan", "Lapangan"],
+          datasets: [
+            {
+              label: "Jumlah",
+              data: [28, 45, 8, 12],
+              backgroundColor: ["#00aeb6", "#00aa13", "#ee2737", "#f4a024"],
+              borderRadius: 5,
+            },
+          ],
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+        },
+      });
+
+      // C. Tata Guna Lahan
+      new Chart(document.getElementById("landUseChart").getContext("2d"), {
+        type: "doughnut",
+        data: {
+          labels: ["Sawah", "Pemukiman", "Hutan", "Fasilitas"],
+          datasets: [
+            {
+              data: [45, 30, 20, 5],
+              backgroundColor: ["#00aa13", "#4a4a4a", "#00880f", "#ee2737"],
+              borderWidth: 0,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: "bottom" } },
+        },
+      });
+
+      const menuToggle = document.querySelector("#mobile-menu");
+      const navMenu = document.querySelector(".nav-menu");
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener("click", function () {
+          menuToggle.classList.toggle("is-active");
+          navMenu.classList.toggle("active");
+        });
+      }
+
+      // Script Dropdown Mobile (Agar diklik muncul, bukan di-hover)
+      const dropdownBtn = document.querySelector(".dropdown-toggle");
+      const dropdownMenu = document.querySelector(".dropdown-menu");
+
+      if (dropdownBtn) {
+        dropdownBtn.addEventListener("click", function (e) {
+          // Hanya jalankan logic ini jika di layar mobile (lebar <= 768px)
+          if (window.innerWidth <= 768) {
+            e.preventDefault();
+            // Toggle display menu
+            if (dropdownMenu.style.display === "block") {
+              dropdownMenu.style.display = "none";
+            } else {
+              dropdownMenu.style.display = "block";
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
