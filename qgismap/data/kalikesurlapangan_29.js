@@ -1,0 +1,1 @@
+var json_kalikesurlapangan_29 = {"type":"FeatureCollection","name":"kalikesurlapangan_29","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan Desa Kalikesur"},"geometry":{"type":"Point","coordinates":[109.207340287425239,-7.354885585464227]}}]}

@@ -1,0 +1,1 @@
+var json_kutalimanlapangan_31 = {"type":"FeatureCollection","name":"kutalimanlapangan_31","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan Desa Kutaliman"},"geometry":{"type":"Point","coordinates":[109.217324001445846,-7.358498694147976]}}]}

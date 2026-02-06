@@ -1,0 +1,1 @@
+var json_karangsalamkidulkesehatan_4 = {"type":"FeatureCollection","name":"karangsalamkidulkesehatan_4","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Posyandu Merpati"},"geometry":{"type":"Point","coordinates":[109.215751174900646,-7.40956624234041]}}]}

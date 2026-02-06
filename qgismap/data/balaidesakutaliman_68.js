@@ -1,0 +1,1 @@
+var json_balaidesakutaliman_68 = {"type":"FeatureCollection","name":"balaidesakutaliman_68","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Kutaliman"},"geometry":{"type":"Point","coordinates":[109.216213067914751,-7.364079179072297]}}]}

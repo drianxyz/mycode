@@ -1,0 +1,1 @@
+var json_kebocorankesehatan_25 = {"type":"FeatureCollection","name":"kebocorankesehatan_25","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Posyandu Desa Kebocoran"},"geometry":{"type":"Point","coordinates":[109.208431614890671,-7.398956564080739]}}]}

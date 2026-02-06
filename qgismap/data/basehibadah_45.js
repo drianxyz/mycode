@@ -1,0 +1,1 @@
+var json_basehibadah_45 = {"type":"FeatureCollection","name":"basehibadah_45","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":null},"geometry":{"type":"Point","coordinates":[109.185481349304325,-7.363499912929522]}}]}

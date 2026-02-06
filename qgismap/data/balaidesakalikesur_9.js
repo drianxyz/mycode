@@ -1,0 +1,1 @@
+var json_balaidesakalikesur_9 = {"type":"FeatureCollection","name":"balaidesakalikesur_9","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Kalikesur"},"geometry":{"type":"Point","coordinates":[109.207761899832704,-7.354105662228885]}}]}

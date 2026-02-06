@@ -1,0 +1,1 @@
+var json_balaidesakalisalak_58 = {"type":"FeatureCollection","name":"balaidesakalisalak_58","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Kalisalak"},"geometry":{"type":"Point","coordinates":[109.194578575904529,-7.357662738389859]}}]}

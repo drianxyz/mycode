@@ -1,0 +1,1 @@
+var json_balaidesakarangsalamkidul_61 = {"type":"FeatureCollection","name":"balaidesakarangsalamkidul_61","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Karangsalam Kidul"},"geometry":{"type":"Point","coordinates":[109.21242033364193,-7.401783761569276]}}]}

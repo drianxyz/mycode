@@ -1,0 +1,1 @@
+var json_kebocoranlapangan_15 = {"type":"FeatureCollection","name":"kebocoranlapangan_15","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan Sepakbola Kebocoran"},"geometry":{"type":"Point","coordinates":[109.20512593428974,-7.398902265987817]}}]}

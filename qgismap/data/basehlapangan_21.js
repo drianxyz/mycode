@@ -1,0 +1,1 @@
+var json_basehlapangan_21 = {"type":"FeatureCollection","name":"basehlapangan_21","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan Desa Baseh"},"geometry":{"type":"Point","coordinates":[109.185067405654237,-7.362721698867362]}}]}

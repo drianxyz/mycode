@@ -1,0 +1,1 @@
+var json_windujayalapangan_22 = {"type":"FeatureCollection","name":"windujayalapangan_22","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan Desa Windujaya"},"geometry":{"type":"Point","coordinates":[109.198032120774911,-7.354517335722663]}}]}

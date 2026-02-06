@@ -1,0 +1,1 @@
+var json_karangsalamkidullapangan_14 = {"type":"FeatureCollection","name":"karangsalamkidullapangan_14","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan Sepakbola Karangsalam Kidul"},"geometry":{"type":"Point","coordinates":[109.215812441773522,-7.402143864560928]}}]}

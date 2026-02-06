@@ -1,0 +1,1 @@
+var json_balaidesawindujaya_61 = {"type":"FeatureCollection","name":"balaidesawindujaya_61","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Balai Desa Windujaya"},"geometry":{"type":"Point","coordinates":[109.197679148111916,-7.354407077679253]}}]}

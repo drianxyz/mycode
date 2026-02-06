@@ -1,0 +1,1 @@
+var json_bejilapangan_13 = {"type":"FeatureCollection","name":"bejilapangan_13","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Lapangan Desa Beji"},"geometry":{"type":"Point","coordinates":[109.219713595035145,-7.390947972103578]}}]}

@@ -1,0 +1,1 @@
+var json_dawuhanwetankesehatan_23 = {"type":"FeatureCollection","name":"dawuhanwetankesehatan_23","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Apotek KSB Dawuhan"},"geometry":{"type":"Point","coordinates":[109.200805521673814,-7.37751535974601]}}]}

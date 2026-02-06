@@ -1,0 +1,1 @@
+var json_karangnangkalapangan_30 = {"type":"FeatureCollection","name":"karangnangkalapangan_30","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","nama":"Gelora Wasesa Karangnangka"},"geometry":{"type":"Point","coordinates":[109.219876899834063,-7.376926217645567]}}]}
